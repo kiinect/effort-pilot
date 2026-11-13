@@ -1,0 +1,5 @@
+{
+  "name": "effort-pilot",
+  "owner": { "name": "kiinect" },
+  "plugins": [{ "name": "effort-pilot", "source": "./" }]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "effort-pilot",
+  "version": "0.1.0",
+  "description": "Picks the effort level per prompt (with your approval unless auto-approve is on), lets Claude switch effort mid-turn, and trims token waste without changing outcomes.",
+  "userConfig": {
+    "autoApprove": {
+      "type": "boolean",
+      "title": "Auto-approve effort changes",
+      "description": "Apply the pilot's picks and Claude's set_effort requests without asking.",
+      "default": false
+    },
+    "classifier": {
+      "type": "string",
+      "title": "Classifier",
+      "description": "heuristic = free, local rules. hybrid = also asks Haiku (low effort) when the rules are unsure.",
+      "options": [
+        "heuristic",
+        "hybrid"
+      ],
+      "default": "heuristic"
+    },
+    "minLevel": {
+      "type": "string",
+      "title": "Lowest effort the pilot may pick",
+      "options": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "low",
+      "description": "Floor for picks; raise it if low ever feels too thin."
+    },
+    "maxLevel": {
+      "type": "string",
+      "title": "Highest effort the pilot may pick",
+      "options": [
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "default": "xhigh",
+      "description": "Ceiling for picks; the pilot only goes past high on strong signals."
+    },
+    "trimBashChars": {
+      "type": "number",
+      "title": "Trim Bash output over N chars (0 = off)",
+      "description": "Keeps head + tail for the model; the full output is saved to a file it can read.",
+      "default": 8000
+    },
+    "readGuardLines": {
+      "type": "number",
+      "title": "Guard whole-file Reads over N lines (0 = off)",
+      "description": "First whole read of a big file is bounced once with its size; repeating the call reads it.",
+      "default": 800
+    },
+    "leanPrompt": {
+      "type": "boolean",
+      "title": "Add the lean-work rules to the system prompt",
+      "default": true,
+      "description": "About 60 tokens of efficiency rules, sent after the cache boundary."
+    },
+    "spillDir": {
+      "type": "string",
+      "title": "Where trimmed Bash output is saved",
+      "default": "/tmp/effort-pilot",
+      "description": "Folder for full Bash outputs the pilot trimmed."
+    }
+  },
+  "license": "MIT"
+}
